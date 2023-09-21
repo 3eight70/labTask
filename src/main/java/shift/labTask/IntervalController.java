@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/v1/intervals")
 public class IntervalController {
     @Autowired
     private IntervalRepository repository;
@@ -19,22 +20,14 @@ public class IntervalController {
         return "Interval saved.";
     }
 
-    @GetMapping("/getMinInterval")
-    public ourInterval getMinInterval(){
-//        List<ourInterval> intervals = repository.findAll();
-//        if (intervals.isEmpty()){
-//            return null;
-//        }
-//
-//        ourInterval minInterval = intervals.get(0);
-//
-//        for (ourInterval interval : intervals){
-//            if (interval.getFirstInterval().charAt(0) < minInterval.getFirstInterval().charAt(0) && interval.getLastInterval().charAt(0) < minInterval.getLastInterval().charAt(0)){
-//                minInterval = interval;
-//            }
-//        }
-//        return minInterval;
-        return repository.findMinInterval();
+    @GetMapping("/min")
+    public ourInterval getMinInterval(@RequestParam("kind") String kind){
+
+        if(kind.equals("digits") || kind.equals("letters")) {
+            return repository.findMinInterval();
+        }
+
+        return null;
     }
 
     @GetMapping("/getAllIntervals")
@@ -42,21 +35,17 @@ public class IntervalController {
         return repository.findAll();
     }
 
-    @PostMapping(value = "/setIntervals")
-    public ResponseEntity<Void> setIntervals(@RequestBody List<ourInterval> intervals) {
+    @PostMapping(value = "/merge")
+    public ResponseEntity<Void> addIntervals(@RequestParam("kind") String kind, @RequestBody List<ourInterval> intervals) {
 
-        for (ourInterval interval: intervals){
-            System.out.println(interval.getFirstInterval());
-            System.out.println(interval.getLastInterval());
+        if (kind.equals("digits") || kind.equals("letters")) {
+            List<ourInterval> mergedIntervals = mergeIntervals(intervals);
+
+            for (ourInterval interval : mergedIntervals) {
+
+                repository.save(interval);
+            }
         }
-
-        List<ourInterval> mergedIntervals = mergeIntervals(intervals);
-
-        for (ourInterval interval : mergedIntervals){
-
-            repository.save(interval);
-        }
-
         return ResponseEntity.ok().build();
     }
 
@@ -72,7 +61,6 @@ public class IntervalController {
         if (intervals.isEmpty()){
             return null;
         }
-
 
         List<ourInterval> mergedIntervals = new ArrayList<>();
 

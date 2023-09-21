@@ -16,5 +16,5 @@ public class ourInterval {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstInterval;
-    private String  lastInterval;
+    private String lastInterval;
 }
