@@ -41,7 +41,7 @@ public class IntervalController {
         if (kind.equals("digits") || kind.equals("letters")) {
             List<ourInterval> mergedIntervals = mergeIntervals(intervals);
 
-            if (!mergedIntervals.isEmpty()) {
+            if (mergedIntervals != null) {
                 repository.saveAll(mergedIntervals);
             }
         }
