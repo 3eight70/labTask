@@ -3,8 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/intervals")
@@ -62,6 +61,8 @@ public class IntervalController {
         }
 
         List<ourInterval> mergedIntervals = new ArrayList<>();
+
+        Collections.sort(intervals, Comparator.comparing(ourInterval::getFirstInterval));
 
         ourInterval current = intervals.get(0);
 
