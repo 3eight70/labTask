@@ -1,4 +1,4 @@
-package shift.labTask;
+package shift.labTask.IntervalClass;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

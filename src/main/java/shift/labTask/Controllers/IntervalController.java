@@ -1,7 +1,9 @@
-package shift.labTask;
+package shift.labTask.Controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import shift.labTask.Repository.IntervalRepository;
+import shift.labTask.IntervalClass.ourInterval;
 
 import java.util.*;
 
