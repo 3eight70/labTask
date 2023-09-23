@@ -41,9 +41,8 @@ public class IntervalController {
         if (kind.equals("digits") || kind.equals("letters")) {
             List<ourInterval> mergedIntervals = mergeIntervals(intervals);
 
-            for (ourInterval interval : mergedIntervals) {
-
-                repository.save(interval);
+            if (!mergedIntervals.isEmpty()) {
+                repository.saveAll(mergedIntervals);
             }
         }
         return ResponseEntity.ok().build();
